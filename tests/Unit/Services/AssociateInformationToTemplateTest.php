@@ -6,29 +6,29 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
-use App\Models\Attribute;
+use App\Models\Information;
 use App\Jobs\LogAccountAudit;
 use Illuminate\Support\Facades\Queue;
-use App\Services\AssociateAttributeToTemplate;
 use Illuminate\Validation\ValidationException;
+use App\Services\AssociateInformationToTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AssociateAttributeToTemplateTest extends TestCase
+class AssociateInformationToTemplateTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
-    public function it_associates_an_attribute_to_a_template(): void
+    public function it_associates_an_information_to_a_template(): void
     {
         $michael = $this->createUser();
-        $attribute = factory(Attribute::class)->create([
+        $information = factory(Information::class)->create([
             'account_id' => $michael->account_id,
         ]);
         $template = factory(Template::class)->create([
             'account_id' => $michael->account_id,
         ]);
-        $this->executeService($michael, $michael->account, $attribute, $template);
+        $this->executeService($michael, $michael->account, $information, $template);
     }
 
     /** @test */
@@ -39,7 +39,7 @@ class AssociateAttributeToTemplateTest extends TestCase
         ];
 
         $this->expectException(ValidationException::class);
-        (new AssociateAttributeToTemplate)->execute($request);
+        (new AssociateInformationToTemplate)->execute($request);
     }
 
     /** @test */
@@ -49,27 +49,26 @@ class AssociateAttributeToTemplateTest extends TestCase
 
         $michael = $this->createUser();
         $account = $this->createAccount();
-        $attribute = factory(Attribute::class)->create([
+        $information = factory(Information::class)->create([
             'account_id' => $michael->account_id,
         ]);
         $template = factory(Template::class)->create([
             'account_id' => $michael->account_id,
         ]);
-        $this->executeService($michael, $account, $attribute, $template);
+        $this->executeService($michael, $account, $information, $template);
     }
 
     /** @test */
-    public function it_fails_if_attribute_doesnt_belong_to_account(): void
+    public function it_fails_if_information_doesnt_belong_to_account(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $attribute = factory(Attribute::class)->create();
-        $attribute = factory(Attribute::class)->create([]);
+        $information = factory(Information::class)->create();
         $template = factory(Template::class)->create([
             'account_id' => $michael->account_id,
         ]);
-        $this->executeService($michael, $michael->account, $attribute, $template);
+        $this->executeService($michael, $michael->account, $information, $template);
     }
 
     /** @test */
@@ -78,30 +77,29 @@ class AssociateAttributeToTemplateTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $attribute = factory(Attribute::class)->create();
-        $attribute = factory(Attribute::class)->create([
+        $information = factory(Information::class)->create([
             'account_id' => $michael->account_id,
         ]);
         $template = factory(Template::class)->create([]);
-        $this->executeService($michael, $michael->account, $attribute, $template);
+        $this->executeService($michael, $michael->account, $information, $template);
     }
 
-    private function executeService(User $author, Account $account, Attribute $attribute, Template $template): void
+    private function executeService(User $author, Account $account, Information $information, Template $template): void
     {
         Queue::fake();
 
         $request = [
             'account_id' => $account->id,
             'author_id' => $author->id,
-            'attribute_id' => $attribute->id,
+            'information_id' => $information->id,
             'template_id' => $template->id,
             'position' => 3,
         ];
 
-        $template = (new AssociateAttributeToTemplate)->execute($request);
+        $template = (new AssociateInformationToTemplate)->execute($request);
 
-        $this->assertDatabaseHas('attribute_template', [
-            'attribute_id' => $attribute->id,
+        $this->assertDatabaseHas('information_template', [
+            'information_id' => $information->id,
             'template_id' => $template->id,
             'position' => 3,
         ]);
@@ -111,14 +109,14 @@ class AssociateAttributeToTemplateTest extends TestCase
             $template
         );
 
-        Queue::assertPushed(LogAccountAudit::class, function ($job) use ($attribute, $template, $author) {
-            return $job->auditLog['action'] === 'attribute_associated_to_template' &&
+        Queue::assertPushed(LogAccountAudit::class, function ($job) use ($information, $template, $author) {
+            return $job->auditLog['action'] === 'information_associated_to_template' &&
                 $job->auditLog['author_id'] === $author->id &&
                 $job->auditLog['objects'] === json_encode([
                     'template_id' => $template->id,
                     'template_name' => $template->name,
-                    'attribute_id' => $attribute->id,
-                    'attribute_name' => $attribute->name,
+                    'information_id' => $information->id,
+                    'information_name' => $information->name,
                 ]);
         });
     }

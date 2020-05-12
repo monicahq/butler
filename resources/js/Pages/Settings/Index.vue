@@ -28,7 +28,7 @@
             <ul>
               <li v-for="attribute in attributes" :key="attribute.id">
                 {{ attribute.name }} ({{ attribute.type }})
-                <ul class="db" v-if="attribute.default_values">
+                <ul v-if="attribute.default_values" class="db">
                   <li v-for="defaultValue in attribute.default_values" :key="defaultValue.id">
                     {{ defaultValue.value }}
                   </li>

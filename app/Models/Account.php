@@ -28,12 +28,12 @@ class Account extends Model
     }
 
     /**
-     * Get the attributes associated with the account.
+     * Get the information associated with the account.
      *
      * @return HasMany
      */
-    public function attributes()
+    public function informations()
     {
-        return $this->hasMany(Attribute::class);
+        return $this->hasMany(Information::class);
     }
 }

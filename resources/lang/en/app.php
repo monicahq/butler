@@ -32,7 +32,7 @@ return [
     'hide_help' => 'Hide help',
 
     'default_template_name' => 'Default template',
-    'default_gender_attribute_name' => 'Gender',
+    'default_gender_information_name' => 'Gender',
     'default_birthdate_attribute' => 'Birthdate',
     'default_gender_man' => 'Man',
     'default_gender_woman' => 'Woman',

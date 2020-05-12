@@ -9,6 +9,7 @@ use App\Models\AuditLog;
 use App\Models\Template;
 use App\Models\Attribute;
 use App\Models\ContactLog;
+use App\Models\Information;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use App\Models\AttributeDefaultValue;
@@ -36,9 +37,17 @@ $factory->define(Contact::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Attribute::class, function () {
+$factory->define(Information::class, function () {
     return [
         'account_id' => factory(Account::class)->create()->id,
+        'name' => 'gender',
+        'allows_multiple_entries' => false,
+    ];
+});
+
+$factory->define(Attribute::class, function () {
+    return [
+        'information_id' => factory(Information::class)->create()->id,
         'name' => 'gender',
         'type' => 'text',
     ];

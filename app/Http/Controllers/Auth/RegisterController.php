@@ -39,9 +39,6 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        $email = $request->input('email');
-        $password = $request->input('password');
-
         (new CreateAccount)->execute([
             'first_name' => $request->input('firstname'),
             'last_name' => $request->input('lastname'),

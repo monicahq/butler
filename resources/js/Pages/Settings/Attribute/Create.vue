@@ -3,11 +3,9 @@
 
 <template>
   <layout title="Settings">
-
     <!-- main content -->
     <section class="w-100 pa3 ph5-ns">
       <div class="db cf mw8 center">
-
         <!-- left column -->
         <div class="fl w-50-l w-100 pr2-l pr0 mb3 mb0-l">
           <h2>Add a new attribute</h2>
@@ -25,7 +23,9 @@
 
             <p>Type of data</p>
             <div class="db relative">
-              <input id="administrator" v-model="form.type" type="radio" class="mr1 relative" name="permission_level" value="text" />
+              <input id="administrator" v-model="form.type" type="radio" class="mr1 relative" name="permission_level"
+                     value="text"
+              />
               <label for="administrator" class="pointer">
                 Text field
               </label>
@@ -34,7 +34,9 @@
               </p>
             </div>
             <div class="db relative">
-              <input id="administrator" v-model="form.type" type="radio" class="mr1 relative" name="permission_level" value="date" />
+              <input id="administrator" v-model="form.type" type="radio" class="mr1 relative" name="permission_level"
+                     value="date"
+              />
               <label for="administrator" class="pointer">
                 Date
               </label>
@@ -43,7 +45,9 @@
               </p>
             </div>
             <div class="db relative">
-              <input id="administrator" v-model="form.type" type="radio" class="mr1 relative" name="permission_level" value="dropdown" />
+              <input id="administrator" v-model="form.type" type="radio" class="mr1 relative" name="permission_level"
+                     value="dropdown"
+              />
               <label for="administrator" class="pointer">
                 List of choices
               </label>
@@ -53,13 +57,12 @@
             </div>
 
             <p>Options</p>
-
           </form>
         </div>
 
         <!-- right column -->
         <div class="fl w-80-l w-100 pl2-l pl0">
-            sdfasdfa
+          sdfasdfa
         </div>
       </div>
     </section>

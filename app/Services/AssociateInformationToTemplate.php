@@ -4,14 +4,14 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Template;
-use App\Models\Attribute;
+use App\Models\Information;
 
-class AssociateAttributeToTemplate extends BaseService
+class AssociateInformationToTemplate extends BaseService
 {
     private User $author;
     private array $data;
     private Template $template;
-    private Attribute $attribute;
+    private Information $information;
 
     /**
      * Get the data to log after calling the service.
@@ -24,12 +24,12 @@ class AssociateAttributeToTemplate extends BaseService
             'account_id' => $this->data['account_id'],
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action' => 'attribute_associated_to_template',
+            'action' => 'information_associated_to_template',
             'objects' => json_encode([
                 'template_id' => $this->template->id,
                 'template_name' => $this->template->name,
-                'attribute_id' => $this->attribute->id,
-                'attribute_name' => $this->attribute->name,
+                'information_id' => $this->information->id,
+                'information_name' => $this->information->name,
             ]),
         ];
     }
@@ -45,13 +45,13 @@ class AssociateAttributeToTemplate extends BaseService
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
             'template_id' => 'required|integer|exists:templates,id',
-            'attribute_id' => 'required|integer|exists:attributes,id',
+            'information_id' => 'required|integer|exists:information,id',
             'position' => 'required|integer',
         ];
     }
 
     /**
-     * Associate a template with an attribute.
+     * Associate a template with an information.
      *
      * @param array $data
      * @return Template
@@ -62,14 +62,14 @@ class AssociateAttributeToTemplate extends BaseService
         $this->validateRules($data);
         $this->author = $this->validateAuthorBelongsToAccount($data);
 
-        $this->attribute = Attribute::where('account_id', $data['account_id'])
-            ->findOrFail($data['attribute_id']);
+        $this->information = Information::where('account_id', $data['account_id'])
+            ->findOrFail($data['information_id']);
 
         $this->template = Template::where('account_id', $data['account_id'])
             ->findOrFail($data['template_id']);
 
-        $this->template->attributes()->syncWithoutDetaching([
-            $this->attribute->id => ['position' => $data['position']],
+        $this->template->informations()->syncWithoutDetaching([
+            $this->information->id => ['position' => $data['position']],
         ]);
 
         $this->createAuditLog();

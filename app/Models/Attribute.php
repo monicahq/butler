@@ -14,7 +14,7 @@ class Attribute extends Model
      * @var array
      */
     protected $fillable = [
-        'account_id',
+        'information_id',
         'name',
         'type',
         'unit',
@@ -33,13 +33,13 @@ class Attribute extends Model
     ];
 
     /**
-     * Get the account associated with the attribute.
+     * Get the information associated with the attribute.
      *
      * @return BelongsTo
      */
-    public function account()
+    public function information()
     {
-        return $this->belongsTo(Account::class);
+        return $this->belongsTo(Information::class);
     }
 
     /**
@@ -50,15 +50,5 @@ class Attribute extends Model
     public function defaultValues()
     {
         return $this->hasMany(AttributeDefaultValue::class);
-    }
-
-    /**
-     * Get the templates associated with the attribute.
-     *
-     * @return belongsToMany
-     */
-    public function templates()
-    {
-        return $this->belongsToMany(Template::class);
     }
 }

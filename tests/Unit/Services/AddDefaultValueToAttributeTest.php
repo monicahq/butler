@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Attribute;
+use App\Models\Information;
 use App\Jobs\LogAccountAudit;
 use Illuminate\Support\Facades\Queue;
 use App\Services\AddDefaultValueToAttribute;
@@ -21,8 +22,11 @@ class AddDefaultValueToAttributeTest extends TestCase
     public function it_creates_a_default_value_to_attribute(): void
     {
         $michael = $this->createUser();
-        $attribute = factory(Attribute::class)->create([
+        $information = factory(Information::class)->create([
             'account_id' => $michael->account_id,
+        ]);
+        $attribute = factory(Attribute::class)->create([
+            'information_id' => $information->id,
         ]);
         $this->executeService($michael, $michael->account, $attribute);
     }
@@ -45,8 +49,11 @@ class AddDefaultValueToAttributeTest extends TestCase
 
         $michael = $this->createUser();
         $account = $this->createAccount();
-        $attribute = factory(Attribute::class)->create([
+        $information = factory(Information::class)->create([
             'account_id' => $michael->account_id,
+        ]);
+        $attribute = factory(Attribute::class)->create([
+            'information_id' => $information->id,
         ]);
         $this->executeService($michael, $account, $attribute);
     }

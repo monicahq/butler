@@ -27,12 +27,12 @@ class Template extends Model
     }
 
     /**
-     * Get the attribute values associated with the template.
+     * Get the information values associated with the template.
      *
      * @return BelongsToMany
      */
-    public function attributes()
+    public function informations()
     {
-        return $this->belongsToMany(Attribute::class);
+        return $this->belongsToMany(Information::class);
     }
 }

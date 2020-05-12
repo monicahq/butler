@@ -4,7 +4,7 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Template;
-use App\Models\Attribute;
+use App\Models\Information;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TemplateTest extends TestCase
@@ -20,20 +20,20 @@ class TemplateTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_attributes()
+    public function it_has_many_informations()
     {
         $template = factory(Template::class)->create();
 
-        $attribute = factory(Attribute::class)->create([
+        $information = factory(Information::class)->create([
             'account_id' => $template->account_id,
         ]);
-        $template->attributes()->attach(
-            $attribute->id,
+        $template->informations()->attach(
+            $information->id,
             [
                 'position' => 0,
             ]
         );
 
-        $this->assertTrue($template->attributes()->exists());
+        $this->assertTrue($template->informations()->exists());
     }
 }

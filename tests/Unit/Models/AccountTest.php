@@ -6,7 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
-use App\Models\Attribute;
+use App\Models\Information;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AccountTest extends TestCase
@@ -36,13 +36,13 @@ class AccountTest extends TestCase
     }
 
     /** @test */
-    public function it_has_many_attributes()
+    public function it_has_many_informations()
     {
         $account = factory(Account::class)->create();
-        factory(Attribute::class, 2)->create([
+        factory(Information::class, 2)->create([
             'account_id' => $account->id,
         ]);
 
-        $this->assertTrue($account->attributes()->exists());
+        $this->assertTrue($account->informations()->exists());
     }
 }
