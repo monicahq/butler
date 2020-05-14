@@ -14,14 +14,14 @@ class SettingsControllerViewHelper
      */
     public static function templates(Account $account): Collection
     {
-        $templates = $account->templates()->with('attributes')->get();
+        $templates = $account->templates()->with('informations')->get();
 
         $templateCollection = collect([]);
         foreach ($templates as $template) {
             $templateCollection->push([
                 'id' => $template->id,
                 'name' => $template->name,
-                'number_of_attributes' => $template->attributes->count(),
+                'number_of_information' => $template->informations->count(),
             ]);
         }
 
@@ -29,32 +29,44 @@ class SettingsControllerViewHelper
     }
 
     /**
-     * Collection containing all the attributes for this account.
+     * Collection containing all the pieces of information for this account.
      *
      * @return Collection
      */
-    public static function attributes(Account $account): Collection
+    public static function informations(Account $account): Collection
     {
-        $attributes = $account->attributes()->with('defaultValues')->get();
+        $informations = $account->informations()->with('attributes')->get();
 
-        $attributeCollection = collect([]);
-        foreach ($attributes as $attribute) {
-            $defaultValueCollection = collect([]);
-            foreach ($attribute->defaultValues as $defaultValue) {
-                $defaultValueCollection->push([
-                    'id' => $defaultValue->id,
-                    'value' => $defaultValue->value,
+        $informationCollection = collect([]);
+        foreach ($informations as $information) {
+            // attributes
+            $attributes = $information->attributes()->with('defaultValues')->get();
+
+            $attributeCollection = collect([]);
+            foreach ($attributes as $attribute) {
+                $defaultValueCollection = collect([]);
+                foreach ($attribute->defaultValues as $defaultValue) {
+                    $defaultValueCollection->push([
+                        'id' => $defaultValue->id,
+                        'value' => $defaultValue->value,
+                    ]);
+                }
+
+                $attributeCollection->push([
+                    'id' => $attribute->id,
+                    'name' => $attribute->name,
+                    'type' => trans('app.attribute_type_'.$attribute->type),
+                    'default_values' => $attribute->has_default_value ? $defaultValueCollection : null,
                 ]);
             }
 
-            $attributeCollection->push([
-                'id' => $attribute->id,
-                'name' => $attribute->name,
-                'type' => trans('app.attribute_type_'.$attribute->type),
-                'default_values' => $attribute->has_default_value ? $defaultValueCollection : null,
+            $informationCollection->push([
+                'id' => $information->id,
+                'name' => $information->name,
+                'attributes' => $attributes ? $attributeCollection : null,
             ]);
         }
 
-        return $attributeCollection;
+        return $informationCollection;
     }
 }

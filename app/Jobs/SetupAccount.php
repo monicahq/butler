@@ -51,7 +51,7 @@ class SetupAccount implements ShouldQueue
     public function handle()
     {
         $this->addTemplate();
-        $this->addFirstAttributes();
+        $this->addFirstInformation();
     }
 
     /**
@@ -69,16 +69,17 @@ class SetupAccount implements ShouldQueue
     }
 
     /**
-     * Add the first attributes in the account, like gender, birthdate,...
+     * Add the first information in the account, like gender, birthdate,...
      */
-    private function addFirstAttributes(): void
+    private function addFirstInformation(): void
     {
         $this->addGenderInformation();
         $this->addBirthdateInformation();
+        $this->addAddressField();
     }
 
     /**
-     * Add the gender attribute.
+     * Add the gender information.
      */
     private function addGenderInformation(): void
     {
@@ -87,15 +88,6 @@ class SetupAccount implements ShouldQueue
             'author_id' => $this->user->id,
             'name' => trans('app.default_gender_information_name'),
             'allows_multiple_entries' => false,
-        ]);
-
-        $attribute = (new CreateAttribute)->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'information_id' => $information->id,
-            'name' => trans('app.default_gender_information_name'),
-            'type' => 'dropdown',
-            'has_default_value' => true,
         ]);
 
         // associate the information to the template
@@ -107,13 +99,22 @@ class SetupAccount implements ShouldQueue
             'position' => 1,
         ]);
 
+        $attribute = (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_gender_information_name'),
+            'type' => 'dropdown',
+            'has_default_value' => true,
+        ]);
+
         $this->addDefaultValue($attribute, trans('app.default_gender_man'));
         $this->addDefaultValue($attribute, trans('app.default_gender_woman'));
         $this->addDefaultValue($attribute, trans('app.default_gender_other'));
     }
 
     /**
-     * Add the birthdate attribute.
+     * Add the birthdate information.
      */
     private function addBirthdateInformation(): void
     {
@@ -124,13 +125,35 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => false,
         ]);
 
-        $attribute = (new CreateAttribute)->execute([
+        // associate the information to the template
+        (new AssociateInformationToTemplate)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'information_id' => $information->id,
+            'position' => 2,
+        ]);
+
+        (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'information_id' => $information->id,
             'name' => trans('app.default_birthdate_attribute'),
             'type' => 'date',
-            'has_default_value' => true,
+            'has_default_value' => false,
+        ]);
+    }
+
+    /**
+     * Add the address field information.
+     */
+    private function addAddressField(): void
+    {
+        $information = (new CreateInformation)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.default_address_attribute'),
+            'allows_multiple_entries' => true,
         ]);
 
         // associate the information to the template
@@ -139,7 +162,47 @@ class SetupAccount implements ShouldQueue
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
             'information_id' => $information->id,
-            'position' => 2,
+            'position' => 3,
+        ]);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_address_label'),
+            'type' => 'text',
+        ]);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_address_city'),
+            'type' => 'text',
+        ]);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_address_province'),
+            'type' => 'text',
+        ]);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_address_postal_code'),
+            'type' => 'text',
+        ]);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_address_country'),
+            'type' => 'text',
         ]);
     }
 

@@ -21,6 +21,15 @@ class Information extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'allows_multiple_entries' => 'boolean',
+    ];
+
+    /**
      * Get the account associated with the information.
      *
      * @return BelongsTo

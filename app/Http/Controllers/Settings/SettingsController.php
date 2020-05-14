@@ -19,11 +19,11 @@ class SettingsController extends Controller
         $account = auth()->user()->account;
 
         $templates = SettingsControllerViewHelper::templates($account);
-        $attributes = SettingsControllerViewHelper::attributes($account);
+        $informations = SettingsControllerViewHelper::informations($account);
 
         return Inertia::render('Settings/Index', [
             'templates' => $templates,
-            'attributes' => $attributes,
+            'informations' => $informations,
         ]);
     }
 }

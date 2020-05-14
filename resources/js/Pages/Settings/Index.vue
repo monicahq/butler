@@ -19,18 +19,28 @@
           <!-- templates -->
           <div class="ba mb3 bg-white br2 box bc-gray">
             <ul>
-              <li v-for="template in templates" :key="template.id">{{ template.name }} ({{ template.number_of_attributes }} attributes)</li>
+              <li v-for="template in templates" :key="template.id">{{ template.name }} ({{ template.number_of_information }} pieces of information)</li>
             </ul>
           </div>
 
-          <!-- attributes -->
+          <!-- informations -->
           <div class="ba mb3 bg-white br2 box bc-gray">
+            <!-- looping over information -->
             <ul>
-              <li v-for="attribute in attributes" :key="attribute.id">
-                {{ attribute.name }} ({{ attribute.type }})
-                <ul v-if="attribute.default_values" class="db">
-                  <li v-for="defaultValue in attribute.default_values" :key="defaultValue.id">
-                    {{ defaultValue.value }}
+              <li v-for="information in informations" :key="information.id">
+                {{ information.name }} ({{ information.attributes.length }} attributes)
+
+                <!-- looping over the attributes -->
+                <ul v-if="information.attributes" class="db">
+                  <li v-for="attribute in information.attributes" :key="attribute.id">
+                    {{ attribute.name }}
+
+                    <!-- looping over attribute default values -->
+                    <ul v-if="attribute.default_values" class="db">
+                      <li v-for="defaultValue in attribute.default_values" :key="defaultValue.id">
+                        {{ defaultValue.value }}
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </li>
@@ -58,7 +68,7 @@ export default {
       type: Array,
       default: null,
     },
-    attributes: {
+    informations: {
       type: Array,
       default: null,
     },
