@@ -33,8 +33,9 @@ return [
 
     'default_template_name' => 'Default template',
     'default_gender_information_name' => 'Gender',
-    'default_birthdate_attribute' => 'Birthdate',
-    'default_address_attribute' => 'Address',
+    'default_birthdate_information' => 'Birthdate',
+    'default_address_information' => 'Address',
+    'default_pet_information' => 'Pet',
     'default_gender_man' => 'Man',
     'default_gender_woman' => 'Woman',
     'default_gender_other' => 'Other',
@@ -45,6 +46,10 @@ return [
     'default_address_province' => 'Province',
     'default_address_postal_code' => 'Postal code',
     'default_address_country' => 'Country',
+    'default_pet_type' => 'Type of animal',
+    'default_pet_name' => 'Name',
+    'default_pet_type_dog' => 'Dog',
+    'default_pet_type_cat' => 'Cat',
 
     'attribute_type_dropdown' => 'Dropdown',
     'attribute_type_date' => 'Date',

@@ -76,6 +76,7 @@ class SetupAccount implements ShouldQueue
         $this->addGenderInformation();
         $this->addBirthdateInformation();
         $this->addAddressField();
+        $this->addPetField();
     }
 
     /**
@@ -121,7 +122,7 @@ class SetupAccount implements ShouldQueue
         $information = (new CreateInformation)->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
-            'name' => trans('app.default_birthdate_attribute'),
+            'name' => trans('app.default_birthdate_information'),
             'allows_multiple_entries' => false,
         ]);
 
@@ -138,7 +139,7 @@ class SetupAccount implements ShouldQueue
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'information_id' => $information->id,
-            'name' => trans('app.default_birthdate_attribute'),
+            'name' => trans('app.default_birthdate_information'),
             'type' => 'date',
             'has_default_value' => false,
         ]);
@@ -152,7 +153,7 @@ class SetupAccount implements ShouldQueue
         $information = (new CreateInformation)->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
-            'name' => trans('app.default_address_attribute'),
+            'name' => trans('app.default_address_information'),
             'allows_multiple_entries' => true,
         ]);
 
@@ -202,6 +203,48 @@ class SetupAccount implements ShouldQueue
             'author_id' => $this->user->id,
             'information_id' => $information->id,
             'name' => trans('app.default_address_country'),
+            'type' => 'text',
+        ]);
+    }
+
+    /**
+     * Add the pet field information.
+     */
+    private function addPetField(): void
+    {
+        $information = (new CreateInformation)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.default_pet_information'),
+            'allows_multiple_entries' => true,
+        ]);
+
+        // associate the information to the template
+        (new AssociateInformationToTemplate)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'information_id' => $information->id,
+            'position' => 3,
+        ]);
+
+        $attribute = (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_pet_type'),
+            'type' => 'dropdown',
+            'has_default_value' => true,
+        ]);
+
+        $this->addDefaultValue($attribute, trans('app.default_pet_type_dog'));
+        $this->addDefaultValue($attribute, trans('app.default_pet_type_cat'));
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_pet_name'),
             'type' => 'text',
         ]);
     }
