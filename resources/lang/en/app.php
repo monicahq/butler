@@ -36,6 +36,8 @@ return [
     'default_birthdate_information' => 'Birthdate',
     'default_address_information' => 'Address',
     'default_pet_information' => 'Pet',
+    'default_contact_information_information' => 'Contact information',
+    'default_food_preferences_information' => 'Food preferences',
     'default_gender_man' => 'Man',
     'default_gender_woman' => 'Woman',
     'default_gender_other' => 'Other',
@@ -50,8 +52,14 @@ return [
     'default_pet_name' => 'Name',
     'default_pet_type_dog' => 'Dog',
     'default_pet_type_cat' => 'Cat',
+    'default_contact_information_type_attribute' => 'Type',
+    'default_contact_information_value' => 'Value',
+    'default_contact_information_facebook' => 'Facebook',
+    'default_contact_information_email' => 'Email',
+    'default_contact_information_twitter' => 'Twitter',
 
     'attribute_type_dropdown' => 'Dropdown',
     'attribute_type_date' => 'Date',
     'attribute_type_input' => 'Text field',
+    'attribute_type_textarea' => 'Paragraph',
 ];

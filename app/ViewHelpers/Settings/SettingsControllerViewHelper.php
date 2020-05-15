@@ -39,7 +39,6 @@ class SettingsControllerViewHelper
 
         $informationCollection = collect([]);
         foreach ($informations as $information) {
-            // attributes
             $attributes = $information->attributes()->with('defaultValues')->get();
 
             $attributeCollection = collect([]);

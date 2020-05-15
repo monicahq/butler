@@ -77,6 +77,8 @@ class SetupAccount implements ShouldQueue
         $this->addBirthdateInformation();
         $this->addAddressField();
         $this->addPetField();
+        $this->addContactInformationField();
+        $this->addFoodPreferences();
     }
 
     /**
@@ -91,14 +93,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => false,
         ]);
 
-        // associate the information to the template
-        (new AssociateInformationToTemplate)->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'template_id' => $this->template->id,
-            'information_id' => $information->id,
-            'position' => 1,
-        ]);
+        $this->associateToTemplate($information, 1);
 
         $attribute = (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -126,14 +121,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => false,
         ]);
 
-        // associate the information to the template
-        (new AssociateInformationToTemplate)->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'template_id' => $this->template->id,
-            'information_id' => $information->id,
-            'position' => 2,
-        ]);
+        $this->associateToTemplate($information, 2);
 
         (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -157,14 +145,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => true,
         ]);
 
-        // associate the information to the template
-        (new AssociateInformationToTemplate)->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'template_id' => $this->template->id,
-            'information_id' => $information->id,
-            'position' => 3,
-        ]);
+        $this->associateToTemplate($information, 3);
 
         (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -219,14 +200,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => true,
         ]);
 
-        // associate the information to the template
-        (new AssociateInformationToTemplate)->execute([
-            'account_id' => $this->user->account_id,
-            'author_id' => $this->user->id,
-            'template_id' => $this->template->id,
-            'information_id' => $information->id,
-            'position' => 3,
-        ]);
+        $this->associateToTemplate($information, 4);
 
         $attribute = (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -250,6 +224,65 @@ class SetupAccount implements ShouldQueue
     }
 
     /**
+     * Add the contact information panel.
+     */
+    private function addContactInformationField(): void
+    {
+        $information = (new CreateInformation)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.default_contact_information_information'),
+            'allows_multiple_entries' => true,
+        ]);
+
+        $this->associateToTemplate($information, 5);
+
+        $attribute = (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_contact_information_type_attribute'),
+            'type' => 'dropdown',
+            'has_default_value' => true,
+        ]);
+
+        $this->addDefaultValue($attribute, trans('app.default_contact_information_facebook'));
+        $this->addDefaultValue($attribute, trans('app.default_contact_information_email'));
+        $this->addDefaultValue($attribute, trans('app.default_contact_information_twitter'));
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_contact_information_value'),
+            'type' => 'text',
+        ]);
+    }
+
+    /**
+     * Add the food preferences panel.
+     */
+    private function addFoodPreferences(): void
+    {
+        $information = (new CreateInformation)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.default_food_preferences_information'),
+            'allows_multiple_entries' => false,
+        ]);
+
+        $this->associateToTemplate($information, 6);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_food_preferences_information'),
+            'type' => 'textarea',
+        ]);
+    }
+
+    /**
      * Add a default value to an attribute.
      *
      * @param Attribute $attribute
@@ -265,5 +298,22 @@ class SetupAccount implements ShouldQueue
         ];
 
         (new AddDefaultValueToAttribute)->execute($request);
+    }
+
+    /**
+     * Associate the information to the template.
+     *
+     * @param Information $information
+     * @param integer $position
+     */
+    private function associateToTemplate(Information $information, int $position): void
+    {
+        (new AssociateInformationToTemplate)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'template_id' => $this->template->id,
+            'information_id' => $information->id,
+            'position' => $position,
+        ]);
     }
 }

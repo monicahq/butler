@@ -47,6 +47,18 @@ class SetupAccountTest extends TestCase
             'allows_multiple_entries' => true,
         ]);
 
+        $this->assertDatabaseHas('information', [
+            'account_id' => $michael->account_id,
+            'name' => trans('app.default_contact_information_information'),
+            'allows_multiple_entries' => true,
+        ]);
+
+        $this->assertDatabaseHas('information', [
+            'account_id' => $michael->account_id,
+            'name' => trans('app.default_food_preferences_information'),
+            'allows_multiple_entries' => false,
+        ]);
+
         $this->assertDatabaseHas('attributes', [
             'name' => trans('app.default_gender_information_name'),
             'type' => 'dropdown',
@@ -101,6 +113,24 @@ class SetupAccountTest extends TestCase
             'has_default_value' => false,
         ]);
 
+        $this->assertDatabaseHas('attributes', [
+            'name' => trans('app.default_contact_information_type_attribute'),
+            'type' => 'dropdown',
+            'has_default_value' => true,
+        ]);
+
+        $this->assertDatabaseHas('attributes', [
+            'name' => trans('app.default_contact_information_value'),
+            'type' => 'text',
+            'has_default_value' => false,
+        ]);
+
+        $this->assertDatabaseHas('attributes', [
+            'name' => trans('app.default_food_preferences_information'),
+            'type' => 'textarea',
+            'has_default_value' => false,
+        ]);
+
         $this->assertDatabaseHas('attribute_default_values', [
             'value' => trans('app.default_gender_man'),
         ]);
@@ -119,6 +149,18 @@ class SetupAccountTest extends TestCase
 
         $this->assertDatabaseHas('attribute_default_values', [
             'value' => trans('app.default_pet_type_cat'),
+        ]);
+
+        $this->assertDatabaseHas('attribute_default_values', [
+            'value' => trans('app.default_contact_information_facebook'),
+        ]);
+
+        $this->assertDatabaseHas('attribute_default_values', [
+            'value' => trans('app.default_contact_information_email'),
+        ]);
+
+        $this->assertDatabaseHas('attribute_default_values', [
+            'value' => trans('app.default_contact_information_twitter'),
         ]);
     }
 }
