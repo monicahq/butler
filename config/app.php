@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'OfficeLife'),
+    'name' => env('APP_NAME', 'Butler'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://officelife.io'),
+    'url' => env('APP_URL', 'https://butler.io'),
 
     'asset_url' => env('ASSET_URL', null),
 

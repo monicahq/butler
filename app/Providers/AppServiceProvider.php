@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Inertia\Inertia;
-use App\Helpers\InstanceHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
@@ -42,23 +41,8 @@ class AppServiceProvider extends ServiceProvider
                         'last_name' => Auth::user()->last_name,
                         'email' => Auth::user()->email,
                         'name' => Auth::user()->name,
-                        'show_help' => Auth::user()->show_help,
                     ] : null,
-                    'company' => Auth::user() && ! is_null(InstanceHelper::getLoggedCompany()) ? InstanceHelper::getLoggedCompany(): null,
-                    'employee' => Auth::user() && ! is_null(InstanceHelper::getLoggedEmployee()) ? [
-                        'id' => InstanceHelper::getLoggedEmployee()->id,
-                        'first_name' => InstanceHelper::getLoggedEmployee()->first_name,
-                        'last_name' => InstanceHelper::getLoggedEmployee()->last_name,
-                        'name' => InstanceHelper::getLoggedEmployee()->name,
-                        'permission_level' => InstanceHelper::getLoggedEmployee()->permission_level,
-                        'user' => (! InstanceHelper::getLoggedEmployee()->user) ? null : [
-                            'id' => InstanceHelper::getLoggedEmployee()->user_id,
-                        ],
-                    ]: null,
                 ];
-            },
-            'help_links' => function () {
-                return config('officelife.help_links');
             },
             'flash' => function () {
                 return [

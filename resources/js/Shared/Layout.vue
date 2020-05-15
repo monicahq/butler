@@ -204,7 +204,7 @@ export default {
 
   methods: {
     updatePageTitle(title) {
-      document.title = title ? `${title} | OfficeLife` : 'OfficeLife';
+      document.title = title ? `${title} | Butler` : 'Butler';
     },
 
     showFindModal() {
