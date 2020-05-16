@@ -25,6 +25,12 @@ class SetupAccountTest extends TestCase
 
         $this->assertDatabaseHas('information', [
             'account_id' => $michael->account_id,
+            'name' => trans('app.default_description_information'),
+            'allows_multiple_entries' => false,
+        ]);
+
+        $this->assertDatabaseHas('information', [
+            'account_id' => $michael->account_id,
             'name' => trans('app.default_gender_information_name'),
             'allows_multiple_entries' => false,
         ]);
@@ -57,6 +63,12 @@ class SetupAccountTest extends TestCase
             'account_id' => $michael->account_id,
             'name' => trans('app.default_food_preferences_information'),
             'allows_multiple_entries' => false,
+        ]);
+
+        $this->assertDatabaseHas('attributes', [
+            'name' => trans('app.default_description_information'),
+            'type' => 'text',
+            'has_default_value' => false,
         ]);
 
         $this->assertDatabaseHas('attributes', [

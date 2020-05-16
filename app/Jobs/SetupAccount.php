@@ -37,6 +37,13 @@ class SetupAccount implements ShouldQueue
     protected $template;
 
     /**
+     * The position instance.
+     *
+     * @var int
+     */
+    protected int $position = 1;
+
+    /**
      * Create a new job instance.
      * @param User $user
      */
@@ -73,12 +80,36 @@ class SetupAccount implements ShouldQueue
      */
     private function addFirstInformation(): void
     {
+        $this->addDescriptionField();
         $this->addGenderInformation();
         $this->addBirthdateInformation();
         $this->addAddressField();
         $this->addPetField();
         $this->addContactInformationField();
         $this->addFoodPreferences();
+    }
+
+    /**
+     * Add the description information.
+     */
+    private function addDescriptionField(): void
+    {
+        $information = (new CreateInformation)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.default_description_information'),
+            'allows_multiple_entries' => false,
+        ]);
+
+        $this->associateToTemplate($information);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_description_information'),
+            'type' => 'text',
+        ]);
     }
 
     /**
@@ -93,7 +124,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => false,
         ]);
 
-        $this->associateToTemplate($information, 1);
+        $this->associateToTemplate($information);
 
         $attribute = (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -121,7 +152,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => false,
         ]);
 
-        $this->associateToTemplate($information, 2);
+        $this->associateToTemplate($information);
 
         (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -145,7 +176,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => true,
         ]);
 
-        $this->associateToTemplate($information, 3);
+        $this->associateToTemplate($information);
 
         (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -200,7 +231,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => true,
         ]);
 
-        $this->associateToTemplate($information, 4);
+        $this->associateToTemplate($information);
 
         $attribute = (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -235,7 +266,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => true,
         ]);
 
-        $this->associateToTemplate($information, 5);
+        $this->associateToTemplate($information);
 
         $attribute = (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -271,7 +302,7 @@ class SetupAccount implements ShouldQueue
             'allows_multiple_entries' => false,
         ]);
 
-        $this->associateToTemplate($information, 6);
+        $this->associateToTemplate($information);
 
         (new CreateAttribute)->execute([
             'account_id' => $this->user->account_id,
@@ -304,16 +335,17 @@ class SetupAccount implements ShouldQueue
      * Associate the information to the template.
      *
      * @param Information $information
-     * @param integer $position
      */
-    private function associateToTemplate(Information $information, int $position): void
+    private function associateToTemplate(Information $information): void
     {
         (new AssociateInformationToTemplate)->execute([
             'account_id' => $this->user->account_id,
             'author_id' => $this->user->id,
             'template_id' => $this->template->id,
             'information_id' => $information->id,
-            'position' => $position,
+            'position' => $this->position,
         ]);
+
+        $this->position++;
     }
 }

@@ -32,6 +32,7 @@ return [
     'hide_help' => 'Hide help',
 
     'default_template_name' => 'Default template',
+    'default_description_information' => 'Description',
     'default_gender_information_name' => 'Gender',
     'default_birthdate_information' => 'Birthdate',
     'default_address_information' => 'Address',
