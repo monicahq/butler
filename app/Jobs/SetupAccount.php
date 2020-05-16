@@ -87,6 +87,7 @@ class SetupAccount implements ShouldQueue
         $this->addPetField();
         $this->addContactInformationField();
         $this->addFoodPreferences();
+        $this->addHowWeMet();
     }
 
     /**
@@ -310,6 +311,45 @@ class SetupAccount implements ShouldQueue
             'information_id' => $information->id,
             'name' => trans('app.default_food_preferences_information'),
             'type' => 'textarea',
+        ]);
+    }
+
+    /**
+     * Add how you met panel.
+     */
+    private function addHowWeMet(): void
+    {
+        $information = (new CreateInformation)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'name' => trans('app.default_how_we_met_information'),
+            'allows_multiple_entries' => false,
+        ]);
+
+        $this->associateToTemplate($information);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_how_we_met_description'),
+            'type' => 'textarea',
+        ]);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_how_we_met_contact'),
+            'type' => 'contact',
+        ]);
+
+        (new CreateAttribute)->execute([
+            'account_id' => $this->user->account_id,
+            'author_id' => $this->user->id,
+            'information_id' => $information->id,
+            'name' => trans('app.default_how_we_met_date'),
+            'type' => 'date',
         ]);
     }
 

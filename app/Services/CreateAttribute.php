@@ -56,6 +56,7 @@ class CreateAttribute extends BaseService
                     'dropdown',
                     'date',
                     'textarea',
+                    'contact',
                 ]),
             ],
             'has_default_value' => 'nullable|boolean',

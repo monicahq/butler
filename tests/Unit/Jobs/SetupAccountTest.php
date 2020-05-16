@@ -65,6 +65,12 @@ class SetupAccountTest extends TestCase
             'allows_multiple_entries' => false,
         ]);
 
+        $this->assertDatabaseHas('information', [
+            'account_id' => $michael->account_id,
+            'name' => trans('app.default_how_we_met_information'),
+            'allows_multiple_entries' => false,
+        ]);
+
         $this->assertDatabaseHas('attributes', [
             'name' => trans('app.default_description_information'),
             'type' => 'text',
@@ -140,6 +146,24 @@ class SetupAccountTest extends TestCase
         $this->assertDatabaseHas('attributes', [
             'name' => trans('app.default_food_preferences_information'),
             'type' => 'textarea',
+            'has_default_value' => false,
+        ]);
+
+        $this->assertDatabaseHas('attributes', [
+            'name' => trans('app.default_how_we_met_description'),
+            'type' => 'textarea',
+            'has_default_value' => false,
+        ]);
+
+        $this->assertDatabaseHas('attributes', [
+            'name' => trans('app.default_how_we_met_contact'),
+            'type' => 'contact',
+            'has_default_value' => false,
+        ]);
+
+        $this->assertDatabaseHas('attributes', [
+            'name' => trans('app.default_how_we_met_date'),
+            'type' => 'date',
             'has_default_value' => false,
         ]);
 

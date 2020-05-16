@@ -39,6 +39,7 @@ return [
     'default_pet_information' => 'Pet',
     'default_contact_information_information' => 'Contact information',
     'default_food_preferences_information' => 'Food preferences',
+    'default_how_we_met_information' => 'How we met',
     'default_gender_man' => 'Man',
     'default_gender_woman' => 'Woman',
     'default_gender_other' => 'Other',
@@ -58,6 +59,9 @@ return [
     'default_contact_information_facebook' => 'Facebook',
     'default_contact_information_email' => 'Email',
     'default_contact_information_twitter' => 'Twitter',
+    'default_how_we_met_description' => 'Explain how and where you met',
+    'default_how_we_met_contact' => 'Has someone introduced you to this person?',
+    'default_how_we_met_date' => 'Date you met',
 
     'attribute_type_dropdown' => 'Dropdown',
     'attribute_type_date' => 'Date',
