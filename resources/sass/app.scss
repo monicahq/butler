@@ -1,12 +1,7 @@
-@import "~tachyons/css/tachyons.min";
 @import "~/nprogress/nprogress.css";
 
 // Variables
 @import 'variables';
-@import 'buttons';
-@import 'form';
-@import 'register';
-@import 'header';
 
 body {
     background-color: $body-bg;

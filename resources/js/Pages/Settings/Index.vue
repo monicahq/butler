@@ -4,28 +4,25 @@
 <template>
   <layout title="Settings">
     <!-- main content -->
-    <section class="w-100 pa3 ph5-ns">
-      <div class="db cf mw8 center">
-        <!-- left column -->
-        <div class="fl w-20-l w-100 pr2-l pr0 mb3 mb0-l">
-          <ul>
-            <li>Account</li>
-            <li>Contact templates</li>
-          </ul>
+    <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="flex">
+        <!-- left-column -->
+        <div class="w-1/4 mr-3">
+          <div class="rounded overflow-hidden shadow-lg bg-white p-3">
+            <ul>
+              <li>Account</li>
+              <li>Contact templates</li>
+            </ul>
+          </div>
         </div>
 
-        <!-- right column -->
-        <div class="fl w-80-l w-100 pl2-l pl0">
-          <!-- templates -->
-          <div class="ba mb3 bg-white br2 box bc-gray">
+        <!-- left-column -->
+        <div class="w-3/4">
+          <div class="rounded overflow-hidden shadow-lg bg-white p-3">
             <ul>
               <li v-for="template in templates" :key="template.id">{{ template.name }} ({{ template.number_of_information }} pieces of information)</li>
             </ul>
-          </div>
 
-          <!-- informations -->
-          <div class="ba mb3 bg-white br2 box bc-gray">
-            <!-- looping over information -->
             <ul>
               <li v-for="information in informations" :key="information.id">
                 {{ information.name }} ({{ information.attributes.length }} attributes)
@@ -45,12 +42,10 @@
                 </ul>
               </li>
             </ul>
-
-            <p><a href="" class="btn">Edit</a></p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </layout>
 </template>
 

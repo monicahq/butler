@@ -21,16 +21,16 @@
 
 <template>
   <div :class="extraClassUpperDiv">
-    <label v-if="label" class="db fw4 lh-copy f6" :for="id">
+    <label v-if="label" class="block font-normal text-sm mb-2" :for="id">
       {{ label }}
-      <span v-if="!required" class="optional-badge f7">
+      <span v-if="!required" class="optional-badge text-xs">
         {{ $t('app.optional') }}
       </span>
     </label>
     <input :id="id"
            :ref="customRef"
            v-bind="$attrs"
-           class="br2 f5 w-100 ba b--black-40 pa2 outline-0"
+           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:leading-5 relative rounded-md shadow-sm"
            :required="required"
            :type="type"
            :name="name"

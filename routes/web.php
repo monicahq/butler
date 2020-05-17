@@ -15,5 +15,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('settings', 'Settings\\SettingsController@index')->name('settings.index');
-    Route::resource('settings/attributes', 'Settings\\AttributesController');
+    Route::resource('settings/information', 'Settings\\InformationController');
 });

@@ -1,10 +1,9 @@
 <template>
-  <div class="ph2 ph0-ns">
-    <div class="cf mt4 mw7 center br3 mb3 bg-white box">
-      <div class="fn fl-ns w-50-ns pa3">
+  <div class="px-2">
+    <div class="flex items-center justify-center">
+      <div class="max-w-md w-full">
         {{ $t('auth.register_title') }}
-      </div>
-      <div class="fn fl-ns w-50-ns pa3">
+
         <!-- Form Errors -->
         <errors :errors="$page.errors" />
 
@@ -42,7 +41,7 @@
           />
           <!-- Actions -->
           <div class="flex-ns justify-between">
-            <loading-button :classes="'btn add w-auto-ns w-100 mb2 pv2 ph3'" :state="loadingState" :text="$t('auth.register_cta')" />
+            <loading-button :classes="'btn add w-auto-ns w-full mb2 pv2 ph3'" :state="loadingState" :text="$t('auth.register_cta')" />
           </div>
         </form>
       </div>
