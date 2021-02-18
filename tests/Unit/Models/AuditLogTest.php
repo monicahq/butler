@@ -13,21 +13,21 @@ class AuditLogTest extends TestCase
     /** @test */
     public function it_belongs_to_an_account(): void
     {
-        $log = factory(AuditLog::class)->create([]);
+        $log = AuditLog::factory()->create([]);
         $this->assertTrue($log->account()->exists());
     }
 
     /** @test */
     public function it_belongs_to_a_user(): void
     {
-        $log = factory(AuditLog::class)->create([]);
+        $log = AuditLog::factory()->create([]);
         $this->assertTrue($log->author()->exists());
     }
 
     /** @test */
     public function it_returns_the_object_attribute(): void
     {
-        $log = factory(AuditLog::class)->create([]);
+        $log = AuditLog::factory()->create([]);
         $this->assertEquals(
             1,
             $log->object->{'user'}

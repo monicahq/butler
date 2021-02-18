@@ -22,10 +22,10 @@ class AssociateInformationToTemplateTest extends TestCase
     public function it_associates_an_information_to_a_template(): void
     {
         $michael = $this->createUser();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
-        $template = factory(Template::class)->create([
+        $template = Template::factory()->create([
             'account_id' => $michael->account_id,
         ]);
         $this->executeService($michael, $michael->account, $information, $template);
@@ -49,10 +49,10 @@ class AssociateInformationToTemplateTest extends TestCase
 
         $michael = $this->createUser();
         $account = $this->createAccount();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
-        $template = factory(Template::class)->create([
+        $template = Template::factory()->create([
             'account_id' => $michael->account_id,
         ]);
         $this->executeService($michael, $account, $information, $template);
@@ -64,8 +64,8 @@ class AssociateInformationToTemplateTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $information = factory(Information::class)->create();
-        $template = factory(Template::class)->create([
+        $information = Information::factory()->create();
+        $template = Template::factory()->create([
             'account_id' => $michael->account_id,
         ]);
         $this->executeService($michael, $michael->account, $information, $template);
@@ -77,10 +77,10 @@ class AssociateInformationToTemplateTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
-        $template = factory(Template::class)->create([]);
+        $template = Template::factory()->create([]);
         $this->executeService($michael, $michael->account, $information, $template);
     }
 

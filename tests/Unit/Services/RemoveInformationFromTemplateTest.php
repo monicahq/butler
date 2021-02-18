@@ -108,10 +108,10 @@ class RemoveInformationFromTemplateTest extends TestCase
 
     private function associateTemplateAndInformation(Account $accountA, Account $accountB): void
     {
-        $this->template = factory(Template::class)->create([
+        $this->template = Template::factory()->create([
             'account_id' => $accountA->id,
         ]);
-        $this->information = factory(Information::class)->create([
+        $this->information = Information::factory()->create([
             'account_id' => $accountB->id,
         ]);
 

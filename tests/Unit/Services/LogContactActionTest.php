@@ -19,11 +19,11 @@ class LogContactActionTest extends TestCase
     /** @test */
     public function it_logs_an_action(): void
     {
-        $account = factory(Account::class)->create([]);
-        $michael = factory(User::class)->create([
+        $account = Account::factory()->create([]);
+        $michael = User::factory()->create([
             'account_id' => $account->id,
         ]);
-        $contact = factory(Contact::class)->create([
+        $contact = Contact::factory()->create([
             'account_id' => $account->id,
         ]);
 
@@ -33,9 +33,9 @@ class LogContactActionTest extends TestCase
     /** @test */
     public function it_fails_if_the_author_is_not_in_the_account(): void
     {
-        $account = factory(Account::class)->create([]);
-        $michael = factory(User::class)->create([]);
-        $contact = factory(Contact::class)->create([
+        $account = Account::factory()->create([]);
+        $michael = User::factory()->create([]);
+        $contact = Contact::factory()->create([
             'account_id' => $account->id,
         ]);
 
@@ -46,11 +46,11 @@ class LogContactActionTest extends TestCase
     /** @test */
     public function it_fails_if_the_contact_is_not_in_the_account(): void
     {
-        $account = factory(Account::class)->create([]);
-        $michael = factory(User::class)->create([
+        $account = Account::factory()->create([]);
+        $michael = User::factory()->create([
             'account_id' => $account->id,
         ]);
-        $contact = factory(Contact::class)->create([]);
+        $contact = Contact::factory()->create([]);
 
         $this->expectException(ModelNotFoundException::class);
         $this->executeService($michael, $account, $contact);

@@ -53,7 +53,7 @@ class DestroyTemplateTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $account = factory(Account::class)->create();
+        $account = Account::factory()->create();
         $template = $this->createTemplate($account);
         $this->executeService($michael, $michael->account, $template);
     }
@@ -85,7 +85,7 @@ class DestroyTemplateTest extends TestCase
 
     private function createTemplate(Account $account): Template
     {
-        $template = factory(Template::class)->create([
+        $template = Template::factory()->create([
             'account_id' => $account->id,
         ]);
 

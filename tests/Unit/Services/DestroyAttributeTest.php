@@ -54,7 +54,7 @@ class DestroyAttributeTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $account = factory(Account::class)->create();
+        $account = Account::factory()->create();
         $attribute = $this->createAttributeLinkedToAccount($account);
         $this->executeService($michael, $michael->account, $attribute);
     }
@@ -86,10 +86,10 @@ class DestroyAttributeTest extends TestCase
 
     private function createAttributeLinkedToAccount(Account $account): Attribute
     {
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $account->id,
         ]);
-        $attribute = factory(Attribute::class)->create([
+        $attribute = Attribute::factory()->create([
             'information_id' => $information->id,
         ]);
 

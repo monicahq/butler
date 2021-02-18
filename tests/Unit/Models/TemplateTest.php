@@ -14,7 +14,7 @@ class TemplateTest extends TestCase
     /** @test */
     public function it_has_one_account()
     {
-        $template = factory(Template::class)->create();
+        $template = Template::factory()->create();
 
         $this->assertTrue($template->account()->exists());
     }
@@ -22,9 +22,9 @@ class TemplateTest extends TestCase
     /** @test */
     public function it_has_many_informations()
     {
-        $template = factory(Template::class)->create();
+        $template = Template::factory()->create();
 
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $template->account_id,
         ]);
         $template->informations()->attach(

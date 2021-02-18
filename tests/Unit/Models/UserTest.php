@@ -13,7 +13,7 @@ class UserTest extends TestCase
     /** @test */
     public function it_has_one_account()
     {
-        $regis = factory(User::class)->create();
+        $regis = User::factory()->create();
 
         $this->assertTrue($regis->account()->exists());
     }
@@ -21,7 +21,7 @@ class UserTest extends TestCase
     /** @test */
     public function it_returns_the_name_attribute(): void
     {
-        $dwight = factory(User::class)->create([
+        $dwight = User::factory()->create([
             'first_name' => 'Dwight',
             'last_name' => 'Schrute',
         ]);

@@ -22,10 +22,10 @@ class AddDefaultValueToAttributeTest extends TestCase
     public function it_creates_a_default_value_to_attribute(): void
     {
         $michael = $this->createUser();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
-        $attribute = factory(Attribute::class)->create([
+        $attribute = Attribute::factory()->create([
             'information_id' => $information->id,
         ]);
         $this->executeService($michael, $michael->account, $attribute);
@@ -49,10 +49,10 @@ class AddDefaultValueToAttributeTest extends TestCase
 
         $michael = $this->createUser();
         $account = $this->createAccount();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
-        $attribute = factory(Attribute::class)->create([
+        $attribute = Attribute::factory()->create([
             'information_id' => $information->id,
         ]);
         $this->executeService($michael, $account, $attribute);
@@ -64,7 +64,7 @@ class AddDefaultValueToAttributeTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $attribute = factory(Attribute::class)->create();
+        $attribute = Attribute::factory()->create();
         $this->executeService($michael, $michael->account, $attribute);
     }
 

@@ -53,7 +53,7 @@ class DestroyContactTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $account = factory(Account::class)->create();
+        $account = Account::factory()->create();
         $contact = $this->createContactWithAccount($account);
         $this->executeService($michael, $michael->account, $contact);
     }
@@ -85,7 +85,7 @@ class DestroyContactTest extends TestCase
 
     private function createContactWithAccount(Account $account): Contact
     {
-        $contact = factory(Contact::class)->create([
+        $contact = Contact::factory()->create([
             'account_id' => $account->id,
         ]);
 

@@ -4,16 +4,17 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\Account;
+use App\Models\AuditLog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserFactory extends Factory
+class AuditLogFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = AuditLog::class;
 
     /**
      * Define the model's default state.
@@ -24,10 +25,14 @@ class UserFactory extends Factory
     {
         return [
             'account_id' => Account::factory(),
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
+            'author_id' => function (array $attributes) {
+                return User::factory()->create([
+                    'account_id' => $attributes['account_id'],
+                ])->id;
+            },
+            'action' => 'account_created',
+            'author_name' => 'Dwight Schrute',
+            'objects' => '{"user": 1}',
         ];
     }
 }

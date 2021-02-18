@@ -15,8 +15,8 @@ class LogContactAuditTest extends TestCase
     /** @test */
     public function it_logs_a_contact_audit(): void
     {
-        $michael = factory(Contact::class)->create();
-        $regis = factory(User::class)->create([
+        $michael = Contact::factory()->create();
+        $regis = User::factory()->create([
             'account_id' => $michael->account_id,
         ]);
 

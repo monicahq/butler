@@ -14,7 +14,7 @@ class AttributeTest extends TestCase
     /** @test */
     public function it_has_one_information()
     {
-        $gender = factory(Attribute::class)->create();
+        $gender = Attribute::factory()->create();
 
         $this->assertTrue($gender->information()->exists());
     }
@@ -22,8 +22,8 @@ class AttributeTest extends TestCase
     /** @test */
     public function it_has_many_default_values()
     {
-        $gender = factory(Attribute::class)->create();
-        factory(AttributeDefaultValue::class, 2)->create([
+        $gender = Attribute::factory()->create();
+        AttributeDefaultValue::factory()->count(2)->create([
             'attribute_id' => $gender->id,
         ]);
 
