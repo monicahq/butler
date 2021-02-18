@@ -5,10 +5,11 @@
   <layout title="Settings">
     <!-- main content -->
     <section class="flex max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
-
       <!-- left column -->
       <div class="w-3/4 mr-3 rounded overflow-hidden shadow bg-white">
-        <h2 class="text-lg leading-6 font-medium text-gray-900 p-3 border-b border-gray-300 text-center mb-3">Add a new information</h2>
+        <h2 class="text-lg leading-6 font-medium text-gray-900 p-3 border-b border-gray-300 text-center mb-3">
+          Add a new information
+        </h2>
 
         <form @submit.prevent="submit">
           <div class="flex border-b border-gray-300">
@@ -32,37 +33,37 @@
               <!-- List of attributes -->
               <div v-for="attribute in form.attributes" :key="attribute.realId" class="border border-solid border-gray-400 mb-2 relative p-2">
                 <p>Attribute #{{ attribute.id }} <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2">{{ attribute.type }}</span></p>
-                <a href="#" @click.prevent="removeAttribute(attribute)" class="absolute right-0 top-0">Delete</a>
+                <a href="#" class="absolute right-0 top-0" @click.prevent="removeAttribute(attribute)">Delete</a>
 
                 <!-- Text attribute -->
                 <template v-if="attribute.type == 'text'">
-                  <type-text v-on:update-label="updateAttributeLabel(attribute, $event)" />
+                  <type-text @update-label="updateAttributeLabel(attribute, $event)" />
                 </template>
 
                 <!-- Textarea attribute -->
                 <template v-if="attribute.type == 'textarea'">
-                  <type-textarea v-on:update-label="updateAttributeLabel(attribute, $event)" />
+                  <type-textarea @update-label="updateAttributeLabel(attribute, $event)" />
                 </template>
 
                 <!-- Dropdown attribute -->
                 <template v-if="attribute.type == 'dropdown'">
-                  <type-dropdown v-on:update-label="updateAttributeLabel(attribute, $event)" />
+                  <type-dropdown @update-label="updateAttributeLabel(attribute, $event)" />
                 </template>
 
                 <!-- Date attribute -->
                 <template v-if="attribute.type == 'date'">
-                  <type-date v-on:update-label="updateAttributeLabel(attribute, $event)" />
+                  <type-date @update-label="updateAttributeLabel(attribute, $event)" />
                 </template>
               </div>
 
               <!-- CTA Add a new attribute -->
-              <a href="#" class="border-dotted border-b border-gray-400 cursor-pointer text-sm" @click.prevent="showNewForm = true" v-if="!showNewForm">+ Add a new attribute</a>
+              <a v-if="!showNewForm" href="#" class="border-dotted border-b border-gray-400 cursor-pointer text-sm" @click.prevent="showNewForm = true">+ Add a new attribute</a>
 
               <!-- Add a new attribute window -->
               <new
                 v-if="showNewForm"
-                v-on:cancel="showNewForm = false"
-                v-on:value-selected="addAttribute($event)"
+                @cancel="showNewForm = false"
+                @value-selected="addAttribute($event)"
               />
             </div>
           </div>
@@ -73,8 +74,12 @@
 
             <div class="p-3 w-2/3">
               <div class="flex items-center">
-                <input v-model="form.type" id="dropdown" type="checkbox" name="new_attribute_type" class="form-checkbox border-gray-400 h-4 w-4 text-indigo-600" value="dropdown" />
-                <label for="dropdown" class="ml-3 font-medium text-gray-700">Allow multiple entries</label>
+                <input id="dropdown" v-model="form.type" type="checkbox" name="new_attribute_type" class="form-checkbox border-gray-400 h-4 w-4 text-indigo-600"
+                       value="dropdown"
+                />
+                <label for="dropdown" class="ml-3 font-medium text-gray-700">
+                  Allow multiple entries
+                </label>
               </div>
               <p class="mt-1 ml-4 pl-3 block text-sm text-gray-600">
                 Useful if you need to let the user chooses between several choices.

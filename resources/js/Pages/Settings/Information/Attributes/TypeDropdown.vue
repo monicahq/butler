@@ -4,10 +4,10 @@
 <template>
   <div>
     <text-input :name="'name'"
-            :errors="$page.errors.name"
-            :label="'Name of the text field'"
-            :required="true"
-            v-on:input="$emit('update-label', $event)"
+                :errors="$page.errors.name"
+                :label="'Name of the text field'"
+                :required="true"
+                @input="$emit('update-label', $event)"
     />
 
     <ul>
@@ -15,10 +15,8 @@
         {{ possibleValue.name }}
       </li>
       <li>
-
       </li>
     </ul>
-
   </div>
 </template>
 
