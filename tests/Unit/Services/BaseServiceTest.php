@@ -56,7 +56,7 @@ class BaseServiceTest extends TestCase
     /** @test */
     public function it_validates_that_the_user_belongs_to_the_account(): void
     {
-        $regis = factory(User::class)->create();
+        $regis = User::factory()->create();
 
         $data = [
             'account_id' => $regis->account_id,
@@ -76,8 +76,8 @@ class BaseServiceTest extends TestCase
     /** @test */
     public function it_raises_an_exception_if_the_user_doesnt_belong_to_the_account(): void
     {
-        $regis = factory(User::class)->create();
-        $john = factory(User::class)->create();
+        $regis = User::factory()->create();
+        $john = User::factory()->create();
 
         $data = [
             'account_id' => $regis->account_id,
@@ -93,7 +93,7 @@ class BaseServiceTest extends TestCase
     /** @test */
     public function it_validates_that_the_contact_belongs_to_the_account(): void
     {
-        $regis = factory(Contact::class)->create();
+        $regis = Contact::factory()->create();
 
         $data = [
             'account_id' => $regis->account_id,
@@ -113,8 +113,8 @@ class BaseServiceTest extends TestCase
     /** @test */
     public function it_raises_an_exception_if_the_contact_doesnt_belong_to_the_account(): void
     {
-        $regis = factory(Contact::class)->create();
-        $john = factory(Contact::class)->create();
+        $regis = Contact::factory()->create();
+        $john = Contact::factory()->create();
 
         $data = [
             'account_id' => $regis->account_id,

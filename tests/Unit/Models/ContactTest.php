@@ -13,7 +13,7 @@ class ContactTest extends TestCase
     /** @test */
     public function it_has_one_account()
     {
-        $ross = factory(Contact::class)->create();
+        $ross = Contact::factory()->create();
 
         $this->assertTrue($ross->account()->exists());
     }
@@ -21,8 +21,10 @@ class ContactTest extends TestCase
     /** @test */
     public function it_gets_the_full_name_of_the_contact()
     {
-        $ross = factory(Contact::class)->create([
+        $ross = Contact::factory()->create([
             'first_name' => 'ross',
+            'middle_name' => null,
+            'last_name' => null,
         ]);
 
         $this->assertEquals(
@@ -30,9 +32,10 @@ class ContactTest extends TestCase
             $ross->name
         );
 
-        $ross = factory(Contact::class)->create([
+        $ross = Contact::factory()->create([
             'first_name' => 'ross',
             'last_name' => 'geller',
+            'middle_name' => null,
         ]);
 
         $this->assertEquals(
@@ -40,7 +43,7 @@ class ContactTest extends TestCase
             $ross->name
         );
 
-        $ross = factory(Contact::class)->create([
+        $ross = Contact::factory()->create([
             'first_name' => 'ross',
             'last_name' => 'geller',
             'middle_name' => 'junior',

@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Account;
+use App\Models\Template;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserFactory extends Factory
+class TemplateFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Template::class;
 
     /**
      * Define the model's default state.
@@ -24,10 +24,7 @@ class UserFactory extends Factory
     {
         return [
             'account_id' => Account::factory(),
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
+            'name' => 'business',
         ];
     }
 }

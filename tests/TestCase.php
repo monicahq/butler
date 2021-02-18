@@ -17,7 +17,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function createUser(): User
     {
-        return factory(User::class)->create();
+        return User::factory()->create();
     }
 
     /**
@@ -27,6 +27,6 @@ abstract class TestCase extends BaseTestCase
      */
     public function createAccount(): Account
     {
-        return factory(Account::class)->create();
+        return Account::factory()->create();
     }
 }

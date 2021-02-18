@@ -15,7 +15,7 @@ class InformationTest extends TestCase
     /** @test */
     public function it_has_one_account()
     {
-        $gender = factory(Information::class)->create();
+        $gender = Information::factory()->create();
 
         $this->assertTrue($gender->account()->exists());
     }
@@ -23,8 +23,8 @@ class InformationTest extends TestCase
     /** @test */
     public function it_has_many_attributes()
     {
-        $information = factory(Information::class)->create();
-        factory(Attribute::class, 2)->create([
+        $information = Information::factory()->create();
+        Attribute::factory()->count(2)->create([
             'information_id' => $information->id,
         ]);
 
@@ -34,9 +34,9 @@ class InformationTest extends TestCase
     /** @test */
     public function it_has_many_templates()
     {
-        $information = factory(Information::class)->create();
+        $information = Information::factory()->create();
 
-        $template = factory(Template::class)->create([
+        $template = Template::factory()->create([
             'account_id' => $information->account_id,
         ]);
         $information->templates()->attach(

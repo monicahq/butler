@@ -16,8 +16,8 @@ class AccountTest extends TestCase
     /** @test */
     public function it_has_many_users()
     {
-        $account = factory(Account::class)->create();
-        factory(User::class, 2)->create([
+        $account = Account::factory()->create();
+        User::factory()->count(2)->create([
             'account_id' => $account->id,
         ]);
 
@@ -27,8 +27,8 @@ class AccountTest extends TestCase
     /** @test */
     public function it_has_many_templates()
     {
-        $account = factory(Account::class)->create();
-        factory(Template::class, 2)->create([
+        $account = Account::factory()->create();
+        Template::factory(2)->create([
             'account_id' => $account->id,
         ]);
 
@@ -38,8 +38,8 @@ class AccountTest extends TestCase
     /** @test */
     public function it_has_many_informations()
     {
-        $account = factory(Account::class)->create();
-        factory(Information::class, 2)->create([
+        $account = Account::factory()->create();
+        Information::factory(2)->create([
             'account_id' => $account->id,
         ]);
 

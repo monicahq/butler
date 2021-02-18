@@ -22,7 +22,7 @@ class CreateAttributeTest extends TestCase
     public function it_creates_an_attribute(): void
     {
         $michael = $this->createUser();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
         $this->executeService($michael, $michael->account, $information);
@@ -46,7 +46,7 @@ class CreateAttributeTest extends TestCase
 
         $michael = $this->createUser();
         $account = $this->createAccount();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
         $this->executeService($michael, $account, $information);
@@ -59,7 +59,7 @@ class CreateAttributeTest extends TestCase
 
         $michael = $this->createUser();
         $account = $this->createAccount();
-        $information = factory(Information::class)->create([]);
+        $information = Information::factory()->create([]);
         $this->executeService($michael, $account, $information);
     }
 

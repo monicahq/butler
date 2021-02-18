@@ -13,7 +13,7 @@ class AttributeDefaultValueTest extends TestCase
     /** @test */
     public function it_has_one_attribute()
     {
-        $defaultValue = factory(AttributeDefaultValue::class)->create();
+        $defaultValue = AttributeDefaultValue::factory()->create();
 
         $this->assertTrue($defaultValue->attribute()->exists());
     }

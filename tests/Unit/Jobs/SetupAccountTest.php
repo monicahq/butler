@@ -14,7 +14,7 @@ class SetupAccountTest extends TestCase
     /** @test */
     public function it_sets_an_account_up(): void
     {
-        $michael = factory(User::class)->create();
+        $michael = User::factory()->create();
 
         SetupAccount::dispatch($michael);
 

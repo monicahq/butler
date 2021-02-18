@@ -21,7 +21,7 @@ class DestroyInformationTest extends TestCase
     public function it_destroys_an_information(): void
     {
         $michael = $this->createUser();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
         $this->executeService($michael, $michael->account, $information);
@@ -45,7 +45,7 @@ class DestroyInformationTest extends TestCase
 
         $michael = $this->createUser();
         $account = $this->createAccount();
-        $information = factory(Information::class)->create([
+        $information = Information::factory()->create([
             'account_id' => $michael->account_id,
         ]);
         $this->executeService($michael, $account, $information);
@@ -57,7 +57,7 @@ class DestroyInformationTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $michael = $this->createUser();
-        $information = factory(Information::class)->create();
+        $information = Information::factory()->create();
         $this->executeService($michael, $michael->account, $information);
     }
 

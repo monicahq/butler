@@ -14,7 +14,7 @@ class LogAccountAuditTest extends TestCase
     /** @test */
     public function it_logs_an_account_audit(): void
     {
-        $michael = factory(User::class)->create();
+        $michael = User::factory()->create();
 
         $request = [
             'account_id' => $michael->account_id,
