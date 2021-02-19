@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Jobs\SetupAccount;
-use App\Services\CreateAccount;
 use Illuminate\Support\Facades\Queue;
+use App\Services\Account\CreateAccount;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

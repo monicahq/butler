@@ -14,59 +14,59 @@ class SetupAccountTest extends TestCase
     /** @test */
     public function it_sets_an_account_up(): void
     {
-        $michael = User::factory()->create();
+        $ross = User::factory()->create();
 
-        SetupAccount::dispatch($michael);
+        SetupAccount::dispatch($ross);
 
         $this->assertDatabaseHas('templates', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => 'Default template',
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_description_information'),
             'allows_multiple_entries' => false,
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_gender_information_name'),
             'allows_multiple_entries' => false,
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_birthdate_information'),
             'allows_multiple_entries' => false,
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_address_information'),
             'allows_multiple_entries' => true,
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_pet_information'),
             'allows_multiple_entries' => true,
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_contact_information_information'),
             'allows_multiple_entries' => true,
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_food_preferences_information'),
             'allows_multiple_entries' => false,
         ]);
 
         $this->assertDatabaseHas('information', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'name' => trans('app.default_how_we_met_information'),
             'allows_multiple_entries' => false,
         ]);

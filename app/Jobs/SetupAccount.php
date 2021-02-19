@@ -8,15 +8,15 @@ use App\Models\Template;
 use App\Models\Attribute;
 use App\Models\Information;
 use Illuminate\Bus\Queueable;
-use App\Services\CreateTemplate;
-use App\Services\CreateAttribute;
-use App\Services\CreateInformation;
 use Illuminate\Queue\SerializesModels;
+use App\Services\Account\CreateTemplate;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Services\Account\CreateAttribute;
+use App\Services\Account\CreateInformation;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Services\AddDefaultValueToAttribute;
-use App\Services\AssociateInformationToTemplate;
+use App\Services\Account\AddDefaultValueToAttribute;
+use App\Services\Account\AssociateInformationToTemplate;
 
 class SetupAccount implements ShouldQueue
 {

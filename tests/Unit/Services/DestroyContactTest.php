@@ -20,9 +20,9 @@ class DestroyContactTest extends TestCase
     /** @test */
     public function it_destroys_a_contact(): void
     {
-        $michael = $this->createUser();
-        $contact = $this->createContactWithAccount($michael->account);
-        $this->executeService($michael, $michael->account, $contact);
+        $ross = $this->createUser();
+        $contact = $this->createContactWithAccount($ross->account);
+        $this->executeService($ross, $ross->account, $contact);
     }
 
     /** @test */
@@ -41,10 +41,10 @@ class DestroyContactTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
-        $contact = $this->createContactWithAccount($michael->account);
-        $this->executeService($michael, $account, $contact);
+        $contact = $this->createContactWithAccount($ross->account);
+        $this->executeService($ross, $account, $contact);
     }
 
     /** @test */
@@ -52,10 +52,10 @@ class DestroyContactTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = Account::factory()->create();
         $contact = $this->createContactWithAccount($account);
-        $this->executeService($michael, $michael->account, $contact);
+        $this->executeService($ross, $ross->account, $contact);
     }
 
     private function executeService(User $author, Account $account, Contact $contact): void

@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Template;
 use App\Jobs\LogAccountAudit;
-use App\Services\DestroyTemplate;
 use Illuminate\Support\Facades\Queue;
+use App\Services\Account\DestroyTemplate;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,9 +20,9 @@ class DestroyTemplateTest extends TestCase
     /** @test */
     public function it_destroys_a_template(): void
     {
-        $michael = $this->createUser();
-        $template = $this->createTemplate($michael->account);
-        $this->executeService($michael, $michael->account, $template);
+        $ross = $this->createUser();
+        $template = $this->createTemplate($ross->account);
+        $this->executeService($ross, $ross->account, $template);
     }
 
     /** @test */
@@ -41,10 +41,10 @@ class DestroyTemplateTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
-        $template = $this->createTemplate($michael->account);
-        $this->executeService($michael, $account, $template);
+        $template = $this->createTemplate($ross->account);
+        $this->executeService($ross, $account, $template);
     }
 
     /** @test */
@@ -52,10 +52,10 @@ class DestroyTemplateTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = Account::factory()->create();
         $template = $this->createTemplate($account);
-        $this->executeService($michael, $michael->account, $template);
+        $this->executeService($ross, $ross->account, $template);
     }
 
     private function executeService(User $author, Account $account, Template $template): void

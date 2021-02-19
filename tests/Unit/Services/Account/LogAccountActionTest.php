@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\AuditLog;
-use App\Services\LogAccountAction;
+use App\Services\Account\LogAccountAction;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -19,21 +19,21 @@ class LogAccountActionTest extends TestCase
     public function it_logs_an_action(): void
     {
         $account = Account::factory()->create([]);
-        $michael = User::factory()->create([
+        $ross = User::factory()->create([
             'account_id' => $account->id,
         ]);
 
-        $this->executeService($michael, $account);
+        $this->executeService($ross, $account);
     }
 
     /** @test */
     public function it_fails_if_the_author_is_not_in_the_account(): void
     {
         $account = Account::factory()->create([]);
-        $michael = User::factory()->create([]);
+        $ross = User::factory()->create([]);
 
         $this->expectException(ModelNotFoundException::class);
-        $this->executeService($michael, $account);
+        $this->executeService($ross, $account);
     }
 
     /** @test */
@@ -47,12 +47,12 @@ class LogAccountActionTest extends TestCase
         (new LogAccountAction)->execute($request);
     }
 
-    private function executeService(User $michael, Account $account): void
+    private function executeService(User $ross, Account $account): void
     {
         $request = [
             'account_id' => $account->id,
-            'author_id' => $michael->id,
-            'author_name' => $michael->name,
+            'author_id' => $ross->id,
+            'author_name' => $ross->name,
             'action' => 'account_created',
             'objects' => '{"user": 1}',
         ];
@@ -62,8 +62,8 @@ class LogAccountActionTest extends TestCase
         $this->assertDatabaseHas('audit_logs', [
             'id' => $auditLog->id,
             'account_id' => $account->id,
-            'author_id' => $michael->id,
-            'author_name' => $michael->name,
+            'author_id' => $ross->id,
+            'author_name' => $ross->name,
             'action' => 'account_created',
             'objects' => '{"user": 1}',
         ]);

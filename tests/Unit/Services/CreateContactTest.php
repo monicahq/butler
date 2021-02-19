@@ -20,8 +20,8 @@ class CreateContactTest extends TestCase
     /** @test */
     public function it_creates_a_contact(): void
     {
-        $michael = $this->createUser();
-        $this->executeService($michael, $michael->account);
+        $ross = $this->createUser();
+        $this->executeService($ross, $ross->account);
     }
 
     /** @test */
@@ -40,9 +40,9 @@ class CreateContactTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
-        $this->executeService($michael, $account);
+        $this->executeService($ross, $account);
     }
 
     private function executeService(User $author, Account $account): void

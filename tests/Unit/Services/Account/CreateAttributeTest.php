@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -8,8 +8,8 @@ use App\Models\Account;
 use App\Models\Attribute;
 use App\Models\Information;
 use App\Jobs\LogAccountAudit;
-use App\Services\CreateAttribute;
 use Illuminate\Support\Facades\Queue;
+use App\Services\Account\CreateAttribute;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,11 +21,11 @@ class CreateAttributeTest extends TestCase
     /** @test */
     public function it_creates_an_attribute(): void
     {
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $information = Information::factory()->create([
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
         ]);
-        $this->executeService($michael, $michael->account, $information);
+        $this->executeService($ross, $ross->account, $information);
     }
 
     /** @test */
@@ -44,12 +44,12 @@ class CreateAttributeTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
         $information = Information::factory()->create([
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
         ]);
-        $this->executeService($michael, $account, $information);
+        $this->executeService($ross, $account, $information);
     }
 
     /** @test */
@@ -57,10 +57,10 @@ class CreateAttributeTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
         $information = Information::factory()->create([]);
-        $this->executeService($michael, $account, $information);
+        $this->executeService($ross, $account, $information);
     }
 
     private function executeService(User $author, Account $account, Information $information): void

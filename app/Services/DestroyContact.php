@@ -4,8 +4,9 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Contact;
+use App\Interfaces\ServiceInterface;
 
-class DestroyContact extends BaseService
+class DestroyContact extends BaseService implements ServiceInterface
 {
     private User $author;
     private array $data;

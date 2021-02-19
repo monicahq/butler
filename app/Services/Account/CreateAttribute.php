@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Account;
 
 use App\Models\User;
 use App\Models\Attribute;
 use App\Models\Information;
+use App\Services\BaseService;
 use Illuminate\Validation\Rule;
+use App\Interfaces\ServiceInterface;
 
-class CreateAttribute extends BaseService
+class CreateAttribute extends BaseService implements ServiceInterface
 {
     private User $author;
     private array $data;
@@ -71,12 +73,9 @@ class CreateAttribute extends BaseService
      */
     public function execute(array $data): Attribute
     {
-        $this->validateRules($data);
-        $this->author = $this->validateAuthorBelongsToAccount($data);
-        $this->information = Information::where('account_id', $data['account_id'])
-            ->findOrFail($data['information_id']);
-
         $this->data = $data;
+
+        $this->validate();
 
         $this->attribute = Attribute::create([
             'information_id' => $data['information_id'],
@@ -90,5 +89,13 @@ class CreateAttribute extends BaseService
         $this->createAuditLog();
 
         return $this->attribute;
+    }
+
+    public function validate(): void
+    {
+        $this->validateRules($this->data);
+        $this->author = $this->validateAuthorBelongsToAccount($this->data);
+        $this->information = Information::where('account_id', $this->data['account_id'])
+            ->findOrFail($this->data['information_id']);
     }
 }

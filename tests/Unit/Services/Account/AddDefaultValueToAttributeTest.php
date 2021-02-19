@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -9,8 +9,8 @@ use App\Models\Attribute;
 use App\Models\Information;
 use App\Jobs\LogAccountAudit;
 use Illuminate\Support\Facades\Queue;
-use App\Services\AddDefaultValueToAttribute;
 use Illuminate\Validation\ValidationException;
+use App\Services\Account\AddDefaultValueToAttribute;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -21,14 +21,14 @@ class AddDefaultValueToAttributeTest extends TestCase
     /** @test */
     public function it_creates_a_default_value_to_attribute(): void
     {
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $information = Information::factory()->create([
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
         ]);
         $attribute = Attribute::factory()->create([
             'information_id' => $information->id,
         ]);
-        $this->executeService($michael, $michael->account, $attribute);
+        $this->executeService($ross, $ross->account, $attribute);
     }
 
     /** @test */
@@ -47,15 +47,15 @@ class AddDefaultValueToAttributeTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
         $information = Information::factory()->create([
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
         ]);
         $attribute = Attribute::factory()->create([
             'information_id' => $information->id,
         ]);
-        $this->executeService($michael, $account, $attribute);
+        $this->executeService($ross, $account, $attribute);
     }
 
     /** @test */
@@ -63,9 +63,9 @@ class AddDefaultValueToAttributeTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $attribute = Attribute::factory()->create();
-        $this->executeService($michael, $michael->account, $attribute);
+        $this->executeService($ross, $ross->account, $attribute);
     }
 
     private function executeService(User $author, Account $account, Attribute $attribute): void

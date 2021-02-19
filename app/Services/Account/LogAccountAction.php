@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Account;
 
 use App\Models\AuditLog;
+use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
-class LogAccountAction extends BaseService
+class LogAccountAction extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.

@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 class SettingsControllerViewHelper
 {
     /**
-     * Collection containing all the templates for this account.
+     * Get all the templates for this account.
      *
      * @return Collection
      */
@@ -29,7 +29,7 @@ class SettingsControllerViewHelper
     }
 
     /**
-     * Collection containing all the pieces of information for this account.
+     * Get all the pieces of information for this account.
      *
      * @return Collection
      */

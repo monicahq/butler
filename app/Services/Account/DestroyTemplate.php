@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Account;
 
 use App\Models\User;
-use App\Models\Attribute;
-use App\Models\Information;
+use App\Models\Template;
+use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
-class DestroyAttribute extends BaseService
+class DestroyTemplate extends BaseService implements ServiceInterface
 {
     private User $author;
     private array $data;
-    private Attribute $attribute;
+    private Template $template;
 
     /**
      * Get the data to log after calling the service.
@@ -23,9 +24,9 @@ class DestroyAttribute extends BaseService
             'account_id' => $this->data['account_id'],
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action' => 'attribute_destroyed',
+            'action' => 'template_destroyed',
             'objects' => json_encode([
-                'attribute_name' => $this->attribute->name,
+                'template_name' => $this->template->name,
             ]),
         ];
     }
@@ -40,27 +41,25 @@ class DestroyAttribute extends BaseService
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'attribute_id' => 'required|integer|exists:attributes,id',
+            'template_id' => 'required|integer|exists:templates,id',
         ];
     }
 
     /**
-     * Destroy an attribute.
+     * Destroy a template.
      *
      * @param array $data
      */
     public function execute(array $data): void
     {
+        $this->data = $data;
         $this->validateRules($data);
         $this->author = $this->validateAuthorBelongsToAccount($data);
 
-        $this->attribute = Attribute::findOrFail($data['attribute_id']);
-        Information::where('account_id', $data['account_id'])
-            ->findOrFail($this->attribute->information_id);
+        $this->template = Template::where('account_id', $data['account_id'])
+            ->findOrFail($data['template_id']);
 
-        $this->data = $data;
-
-        $this->attribute->delete();
+        $this->template->delete();
 
         $this->createAuditLog();
     }

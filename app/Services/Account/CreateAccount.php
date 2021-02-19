@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Account;
 
 use App\Models\User;
 use App\Models\Account;
 use App\Jobs\SetupAccount;
+use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 use Illuminate\Support\Facades\Hash;
 
-class CreateAccount extends BaseService
+class CreateAccount extends BaseService implements ServiceInterface
 {
     private User $user;
     private Account $account;
+    private array $data;
 
     /**
      * Get the validation rules that apply to the service.
@@ -35,11 +38,11 @@ class CreateAccount extends BaseService
      */
     public function execute(array $data): User
     {
-        $this->validateRules($data);
+        $this->data = $data;
+        $this->validateRules($this->data);
 
         $this->account = Account::create();
-
-        $this->addFirstUser($data);
+        $this->addFirstUser();
 
         SetupAccount::dispatch($this->user)->onQueue('low');
 
@@ -48,17 +51,15 @@ class CreateAccount extends BaseService
 
     /**
      * Add the first user in the account.
-     *
-     * @param array $data
      */
-    private function addFirstUser(array $data): void
+    private function addFirstUser(): void
     {
         $this->user = User::create([
             'account_id' => $this->account->id,
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'first_name' => $this->data['first_name'],
+            'last_name' => $this->data['last_name'],
+            'email' => $this->data['email'],
+            'password' => Hash::make($this->data['password']),
         ]);
     }
 }

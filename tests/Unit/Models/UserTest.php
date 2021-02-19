@@ -21,14 +21,14 @@ class UserTest extends TestCase
     /** @test */
     public function it_returns_the_name_attribute(): void
     {
-        $dwight = User::factory()->create([
+        $rachel = User::factory()->create([
             'first_name' => 'Dwight',
             'last_name' => 'Schrute',
         ]);
 
         $this->assertEquals(
             'Dwight Schrute',
-            $dwight->name
+            $rachel->name
         );
     }
 }

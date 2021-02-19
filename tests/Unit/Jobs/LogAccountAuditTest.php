@@ -14,12 +14,12 @@ class LogAccountAuditTest extends TestCase
     /** @test */
     public function it_logs_an_account_audit(): void
     {
-        $michael = User::factory()->create();
+        $ross = User::factory()->create();
 
         $request = [
-            'account_id' => $michael->account_id,
-            'author_id' => $michael->id,
-            'author_name' => $michael->name,
+            'account_id' => $ross->account_id,
+            'author_id' => $ross->id,
+            'author_name' => $ross->name,
             'action' => 'status_created',
             'objects' => json_encode([
                 'company_name' => 'John',
@@ -29,10 +29,10 @@ class LogAccountAuditTest extends TestCase
         LogAccountAudit::dispatch($request);
 
         $this->assertDatabaseHas('audit_logs', [
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
             'action' => 'status_created',
-            'author_id' => $michael->id,
-            'author_name' => $michael->name,
+            'author_id' => $ross->id,
+            'author_name' => $ross->name,
             'objects' => json_encode([
                 'company_name' => 'John',
             ]),

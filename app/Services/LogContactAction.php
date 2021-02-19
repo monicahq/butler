@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Models\ContactLog;
+use App\Interfaces\ServiceInterface;
 
-class LogContactAction extends BaseService
+class LogContactAction extends BaseService implements ServiceInterface
 {
     /**
      * Get the validation rules that apply to the service.

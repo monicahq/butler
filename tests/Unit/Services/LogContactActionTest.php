@@ -20,40 +20,40 @@ class LogContactActionTest extends TestCase
     public function it_logs_an_action(): void
     {
         $account = Account::factory()->create([]);
-        $michael = User::factory()->create([
+        $ross = User::factory()->create([
             'account_id' => $account->id,
         ]);
         $contact = Contact::factory()->create([
             'account_id' => $account->id,
         ]);
 
-        $this->executeService($michael, $account, $contact);
+        $this->executeService($ross, $account, $contact);
     }
 
     /** @test */
     public function it_fails_if_the_author_is_not_in_the_account(): void
     {
         $account = Account::factory()->create([]);
-        $michael = User::factory()->create([]);
+        $ross = User::factory()->create([]);
         $contact = Contact::factory()->create([
             'account_id' => $account->id,
         ]);
 
         $this->expectException(ModelNotFoundException::class);
-        $this->executeService($michael, $account, $contact);
+        $this->executeService($ross, $account, $contact);
     }
 
     /** @test */
     public function it_fails_if_the_contact_is_not_in_the_account(): void
     {
         $account = Account::factory()->create([]);
-        $michael = User::factory()->create([
+        $ross = User::factory()->create([
             'account_id' => $account->id,
         ]);
         $contact = Contact::factory()->create([]);
 
         $this->expectException(ModelNotFoundException::class);
-        $this->executeService($michael, $account, $contact);
+        $this->executeService($ross, $account, $contact);
     }
 
     /** @test */
@@ -67,13 +67,13 @@ class LogContactActionTest extends TestCase
         (new LogContactAction)->execute($request);
     }
 
-    private function executeService(User $michael, Account $account, Contact $contact): void
+    private function executeService(User $ross, Account $account, Contact $contact): void
     {
         $request = [
             'account_id' => $account->id,
-            'author_id' => $michael->id,
+            'author_id' => $ross->id,
             'contact_id' => $contact->id,
-            'author_name' => $michael->name,
+            'author_name' => $ross->name,
             'action' => 'account_created',
             'objects' => '{"user": 1}',
         ];
@@ -83,8 +83,8 @@ class LogContactActionTest extends TestCase
         $this->assertDatabaseHas('contact_logs', [
             'id' => $auditLog->id,
             'contact_id' => $contact->id,
-            'author_id' => $michael->id,
-            'author_name' => $michael->name,
+            'author_id' => $ross->id,
+            'author_name' => $ross->name,
             'action' => 'account_created',
             'objects' => '{"user": 1}',
         ]);

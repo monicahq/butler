@@ -15,14 +15,14 @@ class LogContactAuditTest extends TestCase
     /** @test */
     public function it_logs_a_contact_audit(): void
     {
-        $michael = Contact::factory()->create();
+        $ross = Contact::factory()->create();
         $regis = User::factory()->create([
-            'account_id' => $michael->account_id,
+            'account_id' => $ross->account_id,
         ]);
 
         $request = [
-            'account_id' => $michael->account_id,
-            'contact_id' => $michael->id,
+            'account_id' => $ross->account_id,
+            'contact_id' => $ross->id,
             'author_id' => $regis->id,
             'author_name' => $regis->name,
             'action' => 'status_created',
@@ -34,7 +34,7 @@ class LogContactAuditTest extends TestCase
         LogContactAudit::dispatch($request);
 
         $this->assertDatabaseHas('contact_logs', [
-            'contact_id' => $michael->id,
+            'contact_id' => $ross->id,
             'action' => 'status_created',
             'author_id' => $regis->id,
             'author_name' => $regis->name,

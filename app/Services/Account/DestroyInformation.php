@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Account;
 
 use App\Models\User;
-use App\Models\Template;
 use App\Models\Information;
+use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
-class RemoveInformationFromTemplate extends BaseService
+class DestroyInformation extends BaseService implements ServiceInterface
 {
     private User $author;
     private array $data;
-    private Template $template;
     private Information $information;
 
     /**
@@ -24,11 +24,8 @@ class RemoveInformationFromTemplate extends BaseService
             'account_id' => $this->data['account_id'],
             'author_id' => $this->author->id,
             'author_name' => $this->author->name,
-            'action' => 'information_removed_from_template',
+            'action' => 'information_destroyed',
             'objects' => json_encode([
-                'template_id' => $this->template->id,
-                'template_name' => $this->template->name,
-                'information_id' => $this->information->id,
                 'information_name' => $this->information->name,
             ]),
         ];
@@ -44,35 +41,27 @@ class RemoveInformationFromTemplate extends BaseService
         return [
             'account_id' => 'required|integer|exists:accounts,id',
             'author_id' => 'required|integer|exists:users,id',
-            'template_id' => 'required|integer|exists:templates,id',
             'information_id' => 'required|integer|exists:information,id',
         ];
     }
 
     /**
-     * Remove an information from a template.
+     * Destroy an information.
      *
      * @param array $data
-     * @return Template
      */
-    public function execute(array $data): Template
+    public function execute(array $data): void
     {
-        $this->data = $data;
         $this->validateRules($data);
         $this->author = $this->validateAuthorBelongsToAccount($data);
 
         $this->information = Information::where('account_id', $data['account_id'])
             ->findOrFail($data['information_id']);
 
-        $this->template = Template::where('account_id', $data['account_id'])
-            ->findOrFail($data['template_id']);
+        $this->data = $data;
 
-        $this->template->informations()->toggle([
-            $this->information->id,
-        ]);
+        $this->information->delete();
 
         $this->createAuditLog();
-
-        return $this->template;
     }
 }

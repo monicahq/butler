@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Account;
 
 use App\Models\User;
 use App\Models\Information;
+use App\Services\BaseService;
+use App\Interfaces\ServiceInterface;
 
-class CreateInformation extends BaseService
+class CreateInformation extends BaseService implements ServiceInterface
 {
     private User $author;
     private array $data;
@@ -53,9 +55,8 @@ class CreateInformation extends BaseService
      */
     public function execute(array $data): Information
     {
-        $this->validateRules($data);
-        $this->author = $this->validateAuthorBelongsToAccount($data);
         $this->data = $data;
+        $this->validate();
 
         $this->information = Information::create([
             'account_id' => $data['account_id'],
@@ -66,5 +67,11 @@ class CreateInformation extends BaseService
         $this->createAuditLog();
 
         return $this->information;
+    }
+
+    private function validate(): void
+    {
+        $this->validateRules($this->data);
+        $this->author = $this->validateAuthorBelongsToAccount($this->data);
     }
 }

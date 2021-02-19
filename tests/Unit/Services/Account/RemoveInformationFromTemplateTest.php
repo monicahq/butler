@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -10,7 +10,7 @@ use App\Models\Information;
 use App\Jobs\LogAccountAudit;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
-use App\Services\RemoveInformationFromTemplate;
+use App\Services\Account\RemoveInformationFromTemplate;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -24,9 +24,9 @@ class RemoveInformationFromTemplateTest extends TestCase
     /** @test */
     public function it_removes_an_information_from_a_template(): void
     {
-        $michael = $this->createUser();
-        $this->associateTemplateAndInformation($michael->account, $michael->account);
-        $this->executeService($michael, $michael->account);
+        $ross = $this->createUser();
+        $this->associateTemplateAndInformation($ross->account, $ross->account);
+        $this->executeService($ross, $ross->account);
     }
 
     /** @test */
@@ -45,10 +45,10 @@ class RemoveInformationFromTemplateTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
         $this->associateTemplateAndInformation($account, $account);
-        $this->executeService($michael, $account);
+        $this->executeService($ross, $account);
     }
 
     /** @test */
@@ -56,10 +56,10 @@ class RemoveInformationFromTemplateTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
-        $this->associateTemplateAndInformation($michael->account, $account);
-        $this->executeService($michael, $michael->account);
+        $this->associateTemplateAndInformation($ross->account, $account);
+        $this->executeService($ross, $ross->account);
     }
 
     /** @test */
@@ -67,10 +67,10 @@ class RemoveInformationFromTemplateTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
-        $this->associateTemplateAndInformation($account, $michael->account);
-        $this->executeService($michael, $michael->account);
+        $this->associateTemplateAndInformation($account, $ross->account);
+        $this->executeService($ross, $ross->account);
     }
 
     private function executeService(User $author, Account $account): void

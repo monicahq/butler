@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -8,8 +8,8 @@ use App\Models\Account;
 use App\Models\Attribute;
 use App\Models\Information;
 use App\Jobs\LogAccountAudit;
-use App\Services\DestroyAttribute;
 use Illuminate\Support\Facades\Queue;
+use App\Services\Account\DestroyAttribute;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,9 +21,9 @@ class DestroyAttributeTest extends TestCase
     /** @test */
     public function it_destroys_an_attribute(): void
     {
-        $michael = $this->createUser();
-        $attribute = $this->createAttributeLinkedToAccount($michael->account);
-        $this->executeService($michael, $michael->account, $attribute);
+        $ross = $this->createUser();
+        $attribute = $this->createAttributeLinkedToAccount($ross->account);
+        $this->executeService($ross, $ross->account, $attribute);
     }
 
     /** @test */
@@ -42,10 +42,10 @@ class DestroyAttributeTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
-        $attribute = $this->createAttributeLinkedToAccount($michael->account);
-        $this->executeService($michael, $account, $attribute);
+        $attribute = $this->createAttributeLinkedToAccount($ross->account);
+        $this->executeService($ross, $account, $attribute);
     }
 
     /** @test */
@@ -53,10 +53,10 @@ class DestroyAttributeTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = Account::factory()->create();
         $attribute = $this->createAttributeLinkedToAccount($account);
-        $this->executeService($michael, $michael->account, $attribute);
+        $this->executeService($ross, $ross->account, $attribute);
     }
 
     private function executeService(User $author, Account $account, Attribute $attribute): void

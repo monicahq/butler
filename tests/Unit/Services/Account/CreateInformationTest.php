@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Account;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Information;
 use App\Jobs\LogAccountAudit;
-use App\Services\CreateInformation;
 use Illuminate\Support\Facades\Queue;
+use App\Services\Account\CreateInformation;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,8 +20,8 @@ class CreateInformationTest extends TestCase
     /** @test */
     public function it_creates_an_information(): void
     {
-        $michael = $this->createUser();
-        $this->executeService($michael, $michael->account);
+        $ross = $this->createUser();
+        $this->executeService($ross, $ross->account);
     }
 
     /** @test */
@@ -40,9 +40,9 @@ class CreateInformationTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $michael = $this->createUser();
+        $ross = $this->createUser();
         $account = $this->createAccount();
-        $this->executeService($michael, $account);
+        $this->executeService($ross, $account);
     }
 
     private function executeService(User $author, Account $account): void
